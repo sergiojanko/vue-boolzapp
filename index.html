@@ -10,67 +10,121 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
     <title>Boolzapp</title>
   </head>
   <body>
-    <main class="container">
-      <div class="row">
+    <main id="app" class="container">
+      <div class="row h-100">
         <div class="col-4 container">
           <div class="row">
             <div class="col-12 container">
               <div class="row">
                 <div class="col-8">
                   <!-- User -->
+                  <img class="avatar" src="./img/avatar_io.jpg" alt="Me" />
+                  <span>{{user.name}}</span>
                 </div>
-                <div class="col-4"></div>
+                <div class="col-4">
+                  <!-- buttons -->
+                  <i class="fas fa-solid fa-circle-notch"></i>
+                  <i class="fas fa-comment-alt"></i>
+                  <i class="fas fa-solid fa-ellipsis-v"></i>
+                </div>
               </div>
             </div>
             <div class="col-12 container">
               <div class="row">
                 <!-- Alerts -->
-                <div class="col-2"></div>
-                <div class="col-10"></div>
+                <div class="col-2">
+                  <i class="fas fa-bell-slash"></i>
+                </div>
+                <div class="col-10">
+                  <div>Ricevi notifiche di nuovi messaggi</div>
+                  <div>Attiva notifiche desktop</div>
+                </div>
               </div>
             </div>
             <div class="col-12">
               <!-- Search Bar -->
+              <section class="search p-2">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  class="w-100"
+                  placeholder="Cerca o inizia una nuova chat..."
+                />
+              </section>
             </div>
             <div class="col-12">
               <!-- Contacts -->
+              <div v-for="(contact, index) in contacts" class="contact">
+                <img
+                  class="avatar"
+                  :src="`./img/avatar${contacts[index].avatar}.jpg`"
+                  alt="Contact"
+                />
+                <span>{{contact.name}}</span>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-8 container">
-          <div class="row">
-            <div class="col-8">
+          <div id="top-bar" class="row">
+            <div class="col-8 d-flex">
               <!-- Contact -->
+              <img class="avatar" src="./img/avatar_1.jpg" alt="avatar" />
+              <div>
+                <div>Michele</div>
+                <div>Ultimo accesso oggi alle</div>
+              </div>
             </div>
-            <div class="col-4">
+            <div class="col-4 d-flex justify-content-end">
               <!-- Buttons -->
+              <i class="fas fa-search"></i>
+              <i class="fas fa-paperclip"></i>
+              <i class="fas fa-solid fa-ellipsis-v"></i>
             </div>
           </div>
-          <div class="row">
+          <div id="chat" class="row">
             <div class="col">
               <!-- Chat -->
+              <section></section>
             </div>
           </div>
-          <div class="row">
+          <div id="bottom-bar" class="row">
             <!-- Bottombar -->
             <div class="col-2">
               <!-- Emoji -->
+              <i class="far fa-smile fa-2x text-muted clickable"></i>
             </div>
             <div class="col-8">
               <!-- New message -->
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Scrivi un messaggio"
+              />
             </div>
             <div class="col-2">
               <!-- audio message -->
+              <i
+                class="fas fa-chevron-circle-right fa-2x text-muted clickable"
+              ></i>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <script src="./js/user.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
