@@ -19,17 +19,17 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <title>Boolzapp</title>
   </head>
   <body>
     <main id="app" class="container">
       <div class="row h-100">
-        <div class="col-4 container">
+        <div class="col-4 container h-100">
           <div class="row">
             <div class="col-12 container">
               <div class="row">
-                <div class="col-8">
+                <div class="col-8 h-100">
                   <!-- User -->
                   <img class="avatar" src="./img/avatar_io.jpg" alt="Me" />
                   <span>{{user.name}}</span>
@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 container">
+            <div id="notifications" class="col-12 container">
               <div class="row">
                 <!-- Alerts -->
                 <div class="col-2">
@@ -67,7 +67,7 @@
             </div>
             <div class="col-12">
               <!-- Contacts -->
-              <div v-for="(contact, index) in contacts" class="contact">
+              <div  @click="showChat(index)" v-for="(contact, index) in contacts" class="contact">
                 <img
                   class="avatar"
                   :src="`./img/avatar${contacts[index].avatar}.jpg`"
@@ -82,9 +82,9 @@
           <div id="top-bar" class="row">
             <div class="col-8 d-flex">
               <!-- Contact -->
-              <img class="avatar" src="./img/avatar_1.jpg" alt="avatar" />
+              <img class="avatar" :src="`./img/avatar${contacts[currentContact].avatar}.jpg`" alt="avatar" />
               <div>
-                <div>Michele</div>
+                <div>{{contacts[currentContact].name}}</div>
                 <div>Ultimo accesso oggi alle</div>
               </div>
             </div>
@@ -95,34 +95,43 @@
               <i class="fas fa-solid fa-ellipsis-v"></i>
             </div>
           </div>
-          <div id="chat" class="row">
-            <div class="col">
+          <section id="chat" class="row">
+            <div class="col-12">
               <!-- Chat -->
-              <section></section>
-            </div>
-          </div>
-          <div id="bottom-bar" class="row">
-            <!-- Bottombar -->
-            <div class="col-2">
-              <!-- Emoji -->
-              <i class="far fa-smile fa-2x text-muted clickable"></i>
-            </div>
-            <div class="col-8">
-              <!-- New message -->
-              <input
+              <ul>
+                <li v-for="(message, index) in contacts[currentContact].messages" class="message-container" :class="message.status">
+                  <div class="message">
+                    <p>{{message.message}}</p>
+                    <time>{{message.date}}</time>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <div id="bottom-bar" class="row">
+              <!-- Bottombar -->
+              <div class="col-2">
+                <!-- Emoji -->
+                <i class="far fa-smile fa-2x text-muted clickable"></i>
+              </div>
+              <div class="col-8">
+                <!-- New message -->
+                <input
                 type="text"
                 class="form-control"
                 placeholder="Scrivi un messaggio"
-              />
-            </div>
-            <div class="col-2">
-              <!-- audio message -->
-              <i
+                v-model.trim="newMessage"
+                @keyup.enter="sendMessage"
+                />
+              </div>
+              <div class="col-2">
+                <!-- audio message -->
+                <i
                 class="fas fa-chevron-circle-right fa-2x text-muted clickable"
-              ></i>
+                ></i>
+              </div>
             </div>
           </div>
-        </div>
+      </div>
       </div>
     </main>
     <script src="./js/script.js"></script>
