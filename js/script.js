@@ -5,6 +5,7 @@ const app = new Vue({
     data:{
         currentContact: 0,
         newMessage: "",
+        inputContact: "",
         user: {
                 name: 'Sergio',
                 avatar: '_io',
@@ -95,20 +96,30 @@ const app = new Vue({
                         },
     ],
 },
-methods: {
-    showChat(index) {
-        this.currentContact = index;
+    methods: {
+        showChat(index) {
+            this.currentContact = index;
+        },
+        sendMessage() {
+            if (!this.newMessage) return;
+
+            const message = {
+                status: "sent",
+                message: this.newMessage,
+                date: dayjs().format("DD/MM/YYYY HH:mm:ss")
+            };
+
+            this.contacts[this.currentContact].messages.push(message);
+            this.newMessage = "";
+
+            setTimeout(() => {
+                const answer = { 
+                    status: "received",
+                    message: "ok",
+                    date: dayjs().format("DD/MM/YYYY HH:mm:ss"),
+                };
+                this.contacts[this.currentContact].messages.push(answer);
+            }, 1000);
+        }
     },
-    sendMessage() {
-        if (!this.newMessage) return;
-
-        const message = {
-            status: "sent",
-            message: this.newMessage,
-            date: dayjs().format("DD/MM/YYYY HH:mm:ss")
-        };
-
-        this.contacts[this.currentContact].messages.push(message);
-    }
-},
-})
+    })
