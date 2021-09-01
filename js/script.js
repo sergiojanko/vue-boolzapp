@@ -120,6 +120,9 @@ const app = new Vue({
                 };
                 this.contacts[this.currentContact].messages.push(answer);
             }, 1000);
+        },
+        deleteMessage(index) {
+            this.contacts[this.currentContact].messages.splice(index, 1);
         }
     },
     })
